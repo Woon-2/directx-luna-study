@@ -34,55 +34,32 @@ project(DirectX_Study VERSION 2023.05.21)
 message(STATUS "configuring DirectX_Study(v${CMAKE_PROJECT_VERSION})...")
 message("Author: @Woon2 (wkdauddns9@gmail.com)")
 
-function(COMMON_CONFIGURATION targetName)
-    # See below link for finding GCC options.
-    # https://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html
-    if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
-        target_compile_options(${targetName}
-        PRIVATE
-            -fconcepts
-            -Wall
-            -pedantic
-            -Wextra
-        )
+# Find and setup google test
+message(STATUS "finding GTest...")
 
-    # See below link for finding Clang options.
-    # https://clang.llvm.org/docs/ClangCommandLineReference.html
-    elseif(CMAKE_CXX_COMPILER_ID MATCHES CLANG)
-        # Clang options differ by platform.
-        if(WIN32)   # clang-cl
-            target_compile_options(${targetName}
-            PRIVATE
-                "/clang:-fcoroutines-ts"
-                -fms-compatiability)
-        else()  # AppleClang or Clang on Linux
-            target_compile_options(${targetName}
-            PRIVATE
-                -std=c++2a
-            )
-        endif()
+find_package(GTest)
 
-    # See below link for finding MSVC options.
-    # https://docs.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category?view=msvc-160
-    elseif(CMAKE_CXX_COMPILER_ID MATCHS MSVC)
-        target_compile_options(${targetName}
-        PRIVATE
-            /W3
-            /JMC-
-            /Zc:__cplusplus
-            /Zc:preprocessor
-        )
-    endif()
+if(Gtest_FOUND)
+    message(STATUS "GTest - Found.")
+else()
+    message(STATUS "GTest - Not found.")
+    message(STATUS "Downloading GTest from github...")
 
-    # Platform setting
-    if(WIN32)
-        target_compile_definitions(${targetName}
-        PRIVATE
-            WIN32_LEAN_AND_MIN NOMINMAX
-        )
-        set_target_properties(${targetName}
-        PROPERTIES
-            WINDOWS_EXPORT_ALL_SYMBOLS OFF
-        )
-    endif()
-endfunction()
+    set(GTEST_COMMIT_HASH "cb455a71fb23303e37ce8ee5b1cde6a2c18f66a5" CACHE
+        STRING "set git commit hash for specific version of google test." FORCE)
+    
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        URL "https://github.com/google/googletest/archive/${GTEST_COMMIT_HASH}.zip"
+    )
+
+    message(STATUS "GTest (${GTEST_COMMIT_HASH}) Downloaded.")
+
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+    FetchContent_MakeAvailable(googletest)
+endif()
+
+add_subdirectory(InitialTest)

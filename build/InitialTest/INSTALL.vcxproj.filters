@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\USER\Desktop\footprint of soilder\directx-luna-study\build\CMakeFiles\08117d1b1d62dd2f3ce51066d990b16f\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{E6389700-CF25-3A43-B53D-F5212F5E09ED}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
