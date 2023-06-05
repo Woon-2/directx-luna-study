@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(InitialTest VERSION 2023.05.22 LANGUAGES CXX)
+project(InitialTest VERSION 2023.06.05 LANGUAGES CXX)
 
 enable_testing()
 

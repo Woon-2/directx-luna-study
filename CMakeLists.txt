@@ -29,7 +29,7 @@ if(NOT DEFINED CMAKE_INSTALL_PREFIX)
         "Set path to install.")
 endif()
 
-project(DirectX_Study VERSION 2023.05.21)
+project(DirectX_Study VERSION 2023.06.05)
 
 message(STATUS "configuring DirectX_Study(v${CMAKE_PROJECT_VERSION})...")
 message("Author: @Woon2 (wkdauddns9@gmail.com)")
@@ -62,4 +62,9 @@ else()
     FetchContent_MakeAvailable(googletest)
 endif()
 
+include("${CMAKE_SOURCE_DIR}/cmake/gitlog.cmake")
+ACTIVATE_GITLOG()
+
 add_subdirectory(InitialTest)
+
+# add_subdirectory(InitialTest)
